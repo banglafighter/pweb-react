@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
-        main: './src/index.tsx'
+        main: './pweb/index.tsx'
     },
     mode: 'development',
     module: {
@@ -61,7 +61,7 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'PWeb React',
+            title: 'PWeb',
             chunksSortMode: 'none',
             template: './public/index.html',
             favicon: './public/favicon.ico',
@@ -70,7 +70,7 @@ module.exports = {
     ],
 
     devServer: {
-        port: 1240,
+        port: 1203,
         historyApiFallback: {
             disableDotRule: true
         },
