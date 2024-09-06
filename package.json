@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "react-rapid-i18n": "^0.0.1",
-    "react-rapid-app": "^1.0.0"
+    "react-rapid-app": "^0.0.2"
   },
   "scripts": {
     "start": "webpack-dev-server",
