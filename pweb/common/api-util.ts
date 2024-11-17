@@ -89,7 +89,34 @@ export const ApiUtil = {
             }
         );
     },
+    handleFileDownload: (component: any, response: RapidHTTResponse, downloadFileName: string, errorMessage?: any) => {
+        if (!errorMessage) {
+            errorMessage = AppMessage.somethingWentWrong;
+        }
+        if (response.isSuccess && response.responseData instanceof Blob) {
+            if (response.responseData.type === "application/json"){
+                ApiUtil.errorFlashRequest(component, errorMessage)
+                return false
+            }
+            const blob = new Blob([response.responseData], {type: response.headers['content-type']});
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
 
+            const contentDisposition = response.headers['content-disposition'];
+            if (contentDisposition) {
+                const fileNameMatch = contentDisposition.match(/filename="?(.+)"?/);
+                if (fileNameMatch && fileNameMatch[1]) {
+                    downloadFileName = fileNameMatch[1];
+                }
+            }
+
+            link.download = downloadFileName;
+            link.click();
+            URL.revokeObjectURL(link.href);
+            return true
+        }
+        return false
+    },
     getFormRequestValidResponseOrNone: (response: RapidHTTResponse, component: any) => {
         let errorMessage = AppMessage.somethingWentWrong;
         let responseData = undefined
