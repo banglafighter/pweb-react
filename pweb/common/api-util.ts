@@ -59,7 +59,7 @@ export const ApiUtil = {
         return responseData
     },
 
-    initListViewData: (apiResponse: any, component: any) => {
+    initListViewData: (apiResponse: any, component: any, afterSetState?: any) => {
         let list = [];
         if (apiResponse && apiResponse.data) {
             list = apiResponse.data;
@@ -86,6 +86,10 @@ export const ApiUtil = {
                 totalPage: totalPage,
                 totalItem: totalItem,
                 apiData: apiResponse
+            }, () => {
+                if (afterSetState) {
+                    afterSetState()
+                }
             }
         );
     },
