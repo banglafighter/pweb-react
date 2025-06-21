@@ -98,8 +98,17 @@ export const ApiUtil = {
             errorMessage = AppMessage.somethingWentWrong;
         }
         if (response.isSuccess && response.responseData instanceof Blob) {
-            if (response.responseData.type === "application/json"){
-                ApiUtil.errorFlashRequest(component, errorMessage)
+            if (response.responseData.type === "application/json") {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    try {
+                        response.responseData = JSON.parse(reader.result as string);
+                        ApiUtil.getFormRequestValidResponseOrNone(response, component)
+                    } catch (e) {
+                        ApiUtil.errorFlashRequest(component, errorMessage)
+                    }
+                }
+                reader.readAsText(response.responseData);
                 return false
             }
             const blob = new Blob([response.responseData], {type: response.headers['content-type']});
