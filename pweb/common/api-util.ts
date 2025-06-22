@@ -12,6 +12,15 @@ export const ApiUtil = {
         return null
     },
 
+    getUrlParams(name: string, defaultValue: any = null) {
+        let urlSearchParams: any = this.getUrlSearchParams()
+        return urlSearchParams.get(name)
+    },
+
+    getUrlSearchParams(): URLSearchParams {
+        return new URLSearchParams(window.location.search);
+    },
+
     errorFlashRequest: (component: any, message: string) => {
         component.showErrorFlash(message)
     },
